@@ -1,0 +1,149 @@
+// Prisma schema for Netflix Clone — PostgreSQL
+// Mirrors the original MySQL schema (video_meta_data.sql) and adds the
+// user-account, profile, subscription, payment, and watchlist tables.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users ────────────────────────────────────────────────────────────────────
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  passwordHash String        @map("password_hash")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+
+  profiles     Profile[]
+  subscription Subscription?
+  payments     Payment[]
+  auditLogs    AuditLog[]
+
+  @@map("users")
+}
+
+// ─── Profiles ─────────────────────────────────────────────────────────────────
+
+model Profile {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  profileName String   @map("profile_name")
+  avatarUrl   String?  @map("avatar_url")
+  gameHandle  String?  @unique @map("game_handle")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  watchlist Watchlist[]
+
+  @@unique([userId, profileName])
+  @@map("profiles")
+}
+
+// ─── Subscriptions ────────────────────────────────────────────────────────────
+
+enum Plan {
+  MOBILE
+  STANDARD
+  STANDARD_WITH_ADS
+  PREMIUM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  PAST_DUE
+  TRIALING
+}
+
+model Subscription {
+  id        String             @id @default(cuid())
+  userId    String             @unique @map("user_id")
+  plan      Plan               @default(STANDARD)
+  status    SubscriptionStatus @default(ACTIVE)
+  startedAt DateTime           @default(now()) @map("started_at")
+  expiresAt DateTime?          @map("expires_at")
+  updatedAt DateTime           @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+// ─── Payments ─────────────────────────────────────────────────────────────────
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  userId          String        @map("user_id")
+  // Store only the last 4 digits and provider token — never raw card data
+  last4           String?       @map("last4")
+  providerToken   String?       @map("provider_token")
+  amountCents     Int           @map("amount_cents")
+  currency        String        @default("USD")
+  status          PaymentStatus @default(PENDING)
+  failureReason   String?       @map("failure_reason")
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+// ─── Watchlist ────────────────────────────────────────────────────────────────
+
+model Watchlist {
+  id         String   @id @default(cuid())
+  profileId  String   @map("profile_id")
+  videoTitle String   @map("video_title")
+  addedAt    DateTime @default(now()) @map("added_at")
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, videoTitle])
+  @@map("watchlist")
+}
+
+// ─── Video Metadata ───────────────────────────────────────────────────────────
+// Migrated from MySQL video_meta_data table
+
+model VideoMetadata {
+  id                 String @id @default(cuid())
+  videoTitle         String @map("video_title")
+  videoThumbnail     String @map("video_thumbnail")
+  releaseYear        Int    @map("release_year")
+  suggestionCategory String @map("suggestion_category")
+  videoCategory      String @map("video_category")
+  videoRating        String @map("video_rating")
+
+  @@map("video_metadata")
+}
+
+// ─── Audit Logs ───────────────────────────────────────────────────────────────
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?  @map("user_id")
+  action     String
+  resource   String
+  ipAddress  String?  @map("ip_address")
+  userAgent  String?  @map("user_agent")
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("audit_logs")
+}
