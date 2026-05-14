@@ -1,17 +1,24 @@
-import { defineConfig } from 'vite';
+import { defineConfig, transformWithEsbuild } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig({
-  plugins: [react({ include: /\.(jsx|js|tsx|ts)$/ })],
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: { '.js': 'jsx' },
-    },
+// CRA-legacy components use JSX inside .js files; run esbuild ahead of
+// vite:build-import-analysis so it never sees raw JSX syntax.
+const treatJsAsJsx = {
+  name: 'treat-js-files-as-jsx',
+  enforce: 'pre',
+  async transform(code, id) {
+    if (id.includes('node_modules')) return null;
+    if (!id.match(/src\/.*\.js$/)) return null;
+    return transformWithEsbuild(code, id, { loader: 'jsx', include: /.*/ });
   },
-  esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.js$/,
-    exclude: [],
+};
+
+export default defineConfig({
+  plugins: [treatJsAsJsx, react()],
+  optimizeDeps: {
+    // Needed for dep pre-bundling in dev mode
+    force: true,
+    esbuildOptions: { loader: { '.js': 'jsx' } },
   },
   server: {
     port: 3000,
