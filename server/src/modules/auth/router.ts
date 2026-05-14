@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { validate } from '../../middleware/validate';
+import { authRateLimiter } from '../../middleware/rateLimiter';
 import { registerSchema, loginSchema, refreshSchema } from './schemas';
 import * as authService from './service';
 
@@ -7,6 +8,7 @@ const router = Router();
 
 router.post(
   '/register',
+  authRateLimiter,
   validate(registerSchema),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -20,6 +22,7 @@ router.post(
 
 router.post(
   '/login',
+  authRateLimiter,
   validate(loginSchema),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -48,7 +51,7 @@ router.get(
   '/verify-email/:email',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const exists = await authService.verifyEmailExists(req.params.email);
+      const exists = await authService.verifyEmailExists(req.params.email as string);
       res.json({ exists });
     } catch (err) {
       next(err);

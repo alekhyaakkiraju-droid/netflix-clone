@@ -9,7 +9,7 @@ router.use(authenticate);
 
 router.get('/:profileId', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const list = await prefService.getWatchlist(req.params.profileId);
+    const list = await prefService.getWatchlist(req.params.profileId as string);
     res.json(list);
   } catch (err) { next(err); }
 });
@@ -28,8 +28,8 @@ router.post(
 router.delete('/:profileId/:videoTitle', async (req: Request, res: Response, next: NextFunction) => {
   try {
     await prefService.removeFromWatchlist(
-      req.params.profileId,
-      decodeURIComponent(req.params.videoTitle),
+      req.params.profileId as string,
+      decodeURIComponent(req.params.videoTitle as string),
     );
     res.status(204).send();
   } catch (err) { next(err); }
@@ -37,7 +37,7 @@ router.delete('/:profileId/:videoTitle', async (req: Request, res: Response, nex
 
 router.delete('/:profileId', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await prefService.removeAllByProfile(req.params.profileId);
+    await prefService.removeAllByProfile(req.params.profileId as string);
     res.status(204).send();
   } catch (err) { next(err); }
 });
@@ -45,8 +45,8 @@ router.delete('/:profileId', async (req: Request, res: Response, next: NextFunct
 router.get('/:profileId/check/:videoTitle', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const inList = await prefService.isInWatchlist(
-      req.params.profileId,
-      decodeURIComponent(req.params.videoTitle),
+      req.params.profileId as string,
+      decodeURIComponent(req.params.videoTitle as string),
     );
     res.json({ inList });
   } catch (err) { next(err); }

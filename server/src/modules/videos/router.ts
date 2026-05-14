@@ -23,14 +23,14 @@ router.get('/suggestions', async (req: Request, res: Response, next: NextFunctio
 
 router.get('/genre/:genre', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const videos = await videoService.getVideosByGenre(req.params.genre);
+    const videos = await videoService.getVideosByGenre(req.params.genre as string);
     res.json(videos);
   } catch (err) { next(err); }
 });
 
 router.get('/:title', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const video = await videoService.getVideoByTitle(decodeURIComponent(req.params.title));
+    const video = await videoService.getVideoByTitle(decodeURIComponent(req.params.title as string));
     if (!video) {
       res.status(404).json({ error: 'Video not found' });
       return;

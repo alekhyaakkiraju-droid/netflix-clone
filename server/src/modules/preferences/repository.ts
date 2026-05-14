@@ -38,7 +38,7 @@ export async function removeAllByProfile(profileId: string) {
 
 export async function isInWatchlist(profileId: string, videoTitle: string): Promise<boolean> {
   const count = await db.watchlist.count({
-    where: { profileId_videoTitle: { profileId, videoTitle } },
+    where: { profileId, videoTitle },
   });
   return count > 0;
 }
