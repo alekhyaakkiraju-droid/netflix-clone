@@ -25,9 +25,10 @@ export async function audit(
   try {
     await db.auditLog.create({
       data: {
-        event,
+        action: event,
+        resource: event.split('_')[0].toLowerCase(),
         userId,
-        meta: meta ? JSON.stringify(meta) : undefined,
+        metadata: meta ? (meta as object) : undefined,
       },
     });
   } catch (err) {
