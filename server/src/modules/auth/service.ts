@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import db from '../../lib/db';
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../../lib/jwt';
 import { ConflictError, UnauthorizedError } from '../../lib/errors';
+import { audit } from '../../lib/audit';
 import type { RegisterInput, LoginInput, RefreshInput } from './schemas';
 
 const BCRYPT_ROUNDS = 12;
@@ -21,6 +22,7 @@ export async function register(input: RegisterInput) {
   const accessToken = signAccessToken({ sub: user.id, email: user.email });
   const refreshToken = signRefreshToken({ sub: user.id, email: user.email });
 
+  await audit('USER_REGISTERED', user.id, { email: user.email });
   return { user, accessToken, refreshToken };
 }
 
@@ -35,12 +37,14 @@ export async function login(input: LoginInput) {
   );
 
   if (!user || !passwordMatch) {
+    await audit('LOGIN_FAILED', null, { email: input.email });
     throw new UnauthorizedError('Invalid email or password');
   }
 
   const accessToken = signAccessToken({ sub: user.id, email: user.email });
   const refreshToken = signRefreshToken({ sub: user.id, email: user.email });
 
+  await audit('LOGIN_SUCCESS', user.id, { email: user.email });
   return {
     user: { id: user.id, email: user.email },
     accessToken,
