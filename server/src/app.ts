@@ -24,6 +24,7 @@ import subscriptionsRouter from './modules/subscriptions/router';
 import paymentsRouter from './modules/payments/router';
 import preferencesRouter from './modules/preferences/router';
 import videosRouter from './modules/videos/router';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/profiles', profilesRouter);
@@ -31,5 +32,9 @@ app.use('/api/v1/subscriptions', subscriptionsRouter);
 app.use('/api/v1/payments', paymentsRouter);
 app.use('/api/v1/preferences', preferencesRouter);
 app.use('/api/v1/videos', videosRouter);
+
+// ── 404 + global error handler (must come last) ───────────────────────────────
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 export default app;
