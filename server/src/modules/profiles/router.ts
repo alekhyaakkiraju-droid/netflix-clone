@@ -29,7 +29,7 @@ router.post(
 
 router.get('/:profileId', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const profile = await profileService.getProfileById(req.params.profileId, req.user!.userId);
+    const profile = await profileService.getProfileById(req.params.profileId as string, req.user!.userId);
     res.json(profile);
   } catch (err) { next(err); }
 });
@@ -40,7 +40,7 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const profile = await profileService.updateProfile(
-        req.params.profileId,
+        req.params.profileId as string,
         req.user!.userId,
         req.body,
       );
@@ -51,7 +51,7 @@ router.put(
 
 router.delete('/:profileId', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await profileService.deleteProfile(req.params.profileId, req.user!.userId);
+    await profileService.deleteProfile(req.params.profileId as string, req.user!.userId);
     res.status(204).send();
   } catch (err) { next(err); }
 });
@@ -61,7 +61,7 @@ router.get('/validate/name/:profileName', async (req: Request, res: Response, ne
   try {
     const isAvailable = await profileService.validateProfileName(
       req.user!.userId,
-      req.params.profileName,
+      req.params.profileName as string,
     );
     res.json({ available: isAvailable });
   } catch (err) { next(err); }
@@ -69,7 +69,7 @@ router.get('/validate/name/:profileName', async (req: Request, res: Response, ne
 
 router.get('/validate/handle/:gameHandle', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const isAvailable = await profileService.validateGameHandle(req.params.gameHandle);
+    const isAvailable = await profileService.validateGameHandle(req.params.gameHandle as string);
     res.json({ available: isAvailable });
   } catch (err) { next(err); }
 });

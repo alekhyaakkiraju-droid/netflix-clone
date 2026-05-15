@@ -5,32 +5,37 @@ export async function getAllVideos(query?: string) {
     where: query
       ? {
           OR: [
-            { title: { contains: query, mode: 'insensitive' } },
-            { genre: { contains: query, mode: 'insensitive' } },
+            { videoTitle: { contains: query, mode: 'insensitive' } },
+            { videoCategory: { contains: query, mode: 'insensitive' } },
+            { suggestionCategory: { contains: query, mode: 'insensitive' } },
           ],
         }
       : undefined,
-    orderBy: { title: 'asc' },
+    orderBy: { videoTitle: 'asc' },
   });
 }
 
 export async function getVideoByTitle(title: string) {
   return db.videoMetadata.findFirst({
-    where: { title: { equals: title, mode: 'insensitive' } },
+    where: { videoTitle: { equals: title, mode: 'insensitive' } },
   });
 }
 
 export async function getSuggestions(limit = 10) {
-  // Ordered by cast count as a proxy for popularity (no view count in schema)
   return db.videoMetadata.findMany({
     take: limit,
-    orderBy: [{ title: 'asc' }],
+    orderBy: [{ videoTitle: 'asc' }],
   });
 }
 
 export async function getVideosByGenre(genre: string) {
   return db.videoMetadata.findMany({
-    where: { genre: { contains: genre, mode: 'insensitive' } },
-    orderBy: { title: 'asc' },
+    where: {
+      OR: [
+        { videoCategory: { contains: genre, mode: 'insensitive' } },
+        { suggestionCategory: { contains: genre, mode: 'insensitive' } },
+      ],
+    },
+    orderBy: { videoTitle: 'asc' },
   });
 }
