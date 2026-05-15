@@ -1,0 +1,436 @@
+openapi: 3.0.3
+info:
+  title: NetflixForged API
+  description: |
+    REST API for the NetflixForged streaming platform.
+    All authenticated endpoints require a Bearer JWT in the Authorization header.
+  version: 1.0.0
+  contact:
+    name: NetflixForged Team
+
+servers:
+  - url: http://localhost:3001/api/v1
+    description: Local development
+  - url: https://api.netflixforged.example.com/v1
+    description: Production
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        message: { type: string }
+        statusCode: { type: integer }
+
+    ValidationError:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field: { type: string }
+                  message: { type: string }
+
+    User:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        email: { type: string, format: email }
+        createdAt: { type: string, format: date-time }
+
+    Tokens:
+      type: object
+      properties:
+        accessToken: { type: string }
+        refreshToken: { type: string }
+
+    Profile:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        profileName: { type: string }
+        avatarUrl: { type: string, nullable: true }
+        gameHandle: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    Subscription:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        userId: { type: string, format: uuid }
+        plan:
+          type: string
+          enum: [MOBILE, STANDARD, STANDARD_WITH_ADS, PREMIUM]
+        status:
+          type: string
+          enum: [ACTIVE, CANCELLED, PAST_DUE, TRIALING]
+
+    Payment:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        last4: { type: string, nullable: true }
+        amountCents: { type: integer }
+        currency: { type: string }
+        status:
+          type: string
+          enum: [PENDING, SUCCEEDED, FAILED, REFUNDED]
+        createdAt: { type: string, format: date-time }
+
+    VideoMetadata:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+        genre: { type: string }
+        cast: { type: string }
+        description: { type: string, nullable: true }
+
+    WatchlistItem:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        videoTitle: { type: string }
+        addedAt: { type: string, format: date-time }
+
+security:
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: ok }
+
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Tokens'
+                  - type: object
+                    properties:
+                      user: { $ref: '#/components/schemas/User' }
+        '409':
+          description: Email already registered
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ValidationError' }
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login with email and password
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Tokens'
+                  - type: object
+                    properties:
+                      user: { $ref: '#/components/schemas/User' }
+        '401':
+          description: Invalid credentials
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Refresh access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken: { type: string }
+      responses:
+        '200':
+          description: New access token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken: { type: string }
+
+  /auth/verify-email/{email}:
+    get:
+      tags: [Auth]
+      summary: Check if email is registered
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema: { type: string, format: email }
+      responses:
+        '200':
+          description: Email existence
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exists: { type: boolean }
+
+  /profiles:
+    get:
+      tags: [Profiles]
+      summary: List profiles for the authenticated user
+      responses:
+        '200':
+          description: List of profiles
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Profile' }
+    post:
+      tags: [Profiles]
+      summary: Create a profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [profileName]
+              properties:
+                profileName: { type: string, maxLength: 50 }
+                avatarUrl: { type: string, nullable: true }
+                gameHandle: { type: string, nullable: true }
+      responses:
+        '201':
+          description: Profile created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Profile' }
+        '409':
+          description: Profile name already taken
+
+  /subscriptions:
+    get:
+      tags: [Subscriptions]
+      summary: Get current subscription
+      responses:
+        '200':
+          description: Subscription details
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Subscription' }
+    post:
+      tags: [Subscriptions]
+      summary: Create subscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [plan]
+              properties:
+                plan:
+                  type: string
+                  enum: [MOBILE, STANDARD, STANDARD_WITH_ADS, PREMIUM]
+      responses:
+        '201':
+          description: Subscription created
+    put:
+      tags: [Subscriptions]
+      summary: Change subscription plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [plan]
+              properties:
+                plan:
+                  type: string
+                  enum: [MOBILE, STANDARD, STANDARD_WITH_ADS, PREMIUM]
+      responses:
+        '200':
+          description: Subscription updated
+
+  /payments/card:
+    post:
+      tags: [Payments]
+      summary: Save tokenized payment method (PCI-DSS — no raw card data)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [paymentMethodToken]
+              properties:
+                paymentMethodToken: { type: string, description: 'Stripe paymentMethodId (pm_xxx)' }
+                last4: { type: string, maxLength: 4 }
+      responses:
+        '201':
+          description: Payment method saved
+
+  /payments/proceed:
+    post:
+      tags: [Payments]
+      summary: Process payment for a plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [plan, paymentMethodToken]
+              properties:
+                plan:
+                  type: string
+                  enum: [MOBILE, STANDARD, STANDARD_WITH_ADS, PREMIUM]
+                paymentMethodToken: { type: string }
+      responses:
+        '201':
+          description: Payment processed
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Payment' }
+
+  /payments/history:
+    get:
+      tags: [Payments]
+      summary: Get payment history
+      responses:
+        '200':
+          description: Payment list
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Payment' }
+
+  /videos/suggestions:
+    get:
+      tags: [Videos]
+      summary: Get suggested videos
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, default: 10 }
+      responses:
+        '200':
+          description: Video list
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/VideoMetadata' }
+
+  /videos:
+    get:
+      tags: [Videos]
+      summary: Search videos
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/VideoMetadata' }
+
+  /watchlist:
+    post:
+      tags: [Watchlist]
+      summary: Add video to watchlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [profileId, videoTitle]
+              properties:
+                profileId: { type: string, format: uuid }
+                videoTitle: { type: string }
+      responses:
+        '201':
+          description: Added to watchlist
+
+  /watchlist/{profileId}:
+    get:
+      tags: [Watchlist]
+      summary: Get watchlist for a profile
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Watchlist items
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/WatchlistItem' }
