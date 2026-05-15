@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+server/node_modules
+server/dist
+coverage
+*.min.js
+public
