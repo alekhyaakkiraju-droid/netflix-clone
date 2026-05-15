@@ -1,229 +1,305 @@
 
-.witcher_thumbnail {
+.vCard-ImageLayer.witcher_thumbnail,
+.preview-img.witcher_thumbnail {
     background-image: url('./witcher.png');
 }
-.lincoln_lawyer_thumbnail {
+.vCard-ImageLayer.lincoln_lawyer_thumbnail,
+.preview-img.lincoln_lawyer_thumbnail {
     background-image: url('./lincolin.png');
 }
-.queens_gambit_thumbnail {
+.vCard-ImageLayer.queens_gambit_thumbnail,
+.preview-img.queens_gambit_thumbnail {
     background-image: url('./gambit.png');
 }
-.bridgerton_thumbnail {
+.vCard-ImageLayer.bridgerton_thumbnail,
+.preview-img.bridgerton_thumbnail {
     background-image: url('./birdgerton.png');
 }
-.ozark_thumbnail {
+.vCard-ImageLayer.ozark_thumbnail,
+.preview-img.ozark_thumbnail {
     background-image: url('./ozark.png');
 }
-.heartstopper_thumbnail {
+.vCard-ImageLayer.heartstopper_thumbnail,
+.preview-img.heartstopper_thumbnail {
     background-image: url('./heartstopper.png');
 }
-.you_thumbnail {
+.vCard-ImageLayer.you_thumbnail,
+.preview-img.you_thumbnail {
     background-image: url('./you.png');
 }
-.dead_to_me_thumbnail {
+.vCard-ImageLayer.dead_to_me_thumbnail,
+.preview-img.dead_to_me_thumbnail {
     background-image: url('./deadtome.png');
 }
-.umbrella_academy_thumbnail {
+.vCard-ImageLayer.umbrella_academy_thumbnail,
+.preview-img.umbrella_academy_thumbnail {
     background-image: url('./umbrella.png');
 }
-.cobra_kai_thumbnail {
+.vCard-ImageLayer.cobra_kai_thumbnail,
+.preview-img.cobra_kai_thumbnail {
     background-image: url('./cobrakai.png');
 }
-.narcos_thumbnail {
+.vCard-ImageLayer.narcos_thumbnail,
+.preview-img.narcos_thumbnail {
     background-image: url('./narcos.png');
 }
-.sandman_thumbnail {
+.vCard-ImageLayer.sandman_thumbnail,
+.preview-img.sandman_thumbnail {
     background-image: url('./sandman.png');
 }
-.irishman_thumbnail {
+.vCard-ImageLayer.irishman_thumbnail,
+.preview-img.irishman_thumbnail {
     background-image: url('./irishman.png');
 }
-.roma_thumbnail {
+.vCard-ImageLayer.roma_thumbnail,
+.preview-img.roma_thumbnail {
     background-image: url('./roma.png');
 }
-.chicago_7_thumbnail {
+.vCard-ImageLayer.chicago_7_thumbnail,
+.preview-img.chicago_7_thumbnail {
     background-image: url('./chicago.png');
 }
-.marriage_story_thumbnail {
+.vCard-ImageLayer.marriage_story_thumbnail,
+.preview-img.marriage_story_thumbnail {
     background-image: url('./marriage.png');
 }
-.platform_thumbnail {
+.vCard-ImageLayer.platform_thumbnail,
+.preview-img.platform_thumbnail {
     background-image: url('./platform.png');
 }
-.devil_all_the_time_thumbnail {
+.vCard-ImageLayer.devil_all_the_time_thumbnail,
+.preview-img.devil_all_the_time_thumbnail {
     background-image: url('./devil.png');
 }
-.enola_holmes_thumbnail {
+.vCard-ImageLayer.enola_holmes_thumbnail,
+.preview-img.enola_holmes_thumbnail {
     background-image: url('./enola.png');
 }
-.old_guard_thumbnail {
+.vCard-ImageLayer.old_guard_thumbnail,
+.preview-img.old_guard_thumbnail {
     background-image: url('./old.png');
 }
-.to_all_the_boys_thumbnail {
+.vCard-ImageLayer.to_all_the_boys_thumbnail,
+.preview-img.to_all_the_boys_thumbnail {
     background-image: url('./toall.png');
 }
-.extraction_thumbnail {
+.vCard-ImageLayer.extraction_thumbnail,
+.preview-img.extraction_thumbnail {
     background-image: url('./extraction.png');
 }
-.bird_box_thumbnail {
+.vCard-ImageLayer.bird_box_thumbnail,
+.preview-img.bird_box_thumbnail {
     background-image: url('./birdbox.png');
 }
-.midnight_sky_thumbnail {
+.vCard-ImageLayer.midnight_sky_thumbnail,
+.preview-img.midnight_sky_thumbnail {
     background-image: url('./midnight.png');
 }
-.mother_thumbnail {
+.vCard-ImageLayer.mother_thumbnail,
+.preview-img.mother_thumbnail {
     background-image: url('./mother.png');
 }
-.extraction_2_thumbnail {
+.vCard-ImageLayer.extraction_2_thumbnail,
+.preview-img.extraction_2_thumbnail {
     background-image: url('./extraction2.png');
 }
-.heart_of_stone_thumbnail {
+.vCard-ImageLayer.heart_of_stone_thumbnail,
+.preview-img.heart_of_stone_thumbnail {
     background-image: url('./heartof.png');
 }
-.killer_thumbnail {
+.vCard-ImageLayer.killer_thumbnail,
+.preview-img.killer_thumbnail {
     background-image: url('./killer.png');
 }
-.nimona_thumbnail {
+.vCard-ImageLayer.nimona_thumbnail,
+.preview-img.nimona_thumbnail {
     background-image: url('./nimona.png');
 }
-.fall_of_usher_thumbnail {
+.vCard-ImageLayer.fall_of_usher_thumbnail,
+.preview-img.fall_of_usher_thumbnail {
     background-image: url('./usher.png');
 }
-.killers_flower_moon_thumbnail {
+.vCard-ImageLayer.killers_flower_moon_thumbnail,
+.preview-img.killers_flower_moon_thumbnail {
     background-image: url('./flowermoon.png');
 }
-.dumb_money_thumbnail {
+.vCard-ImageLayer.dumb_money_thumbnail,
+.preview-img.dumb_money_thumbnail {
     background-image: url('./dumb.png');
 }
-.love_at_first_sight_thumbnail {
+.vCard-ImageLayer.love_at_first_sight_thumbnail,
+.preview-img.love_at_first_sight_thumbnail {
     background-image: url('./loveat.png');
 }
-.good_nurse_thumbnail {
+.vCard-ImageLayer.good_nurse_thumbnail,
+.preview-img.good_nurse_thumbnail {
     background-image: url('./good.png');
 }
-.murder_mystery_2_thumbnail {
+.vCard-ImageLayer.murder_mystery_2_thumbnail,
+.preview-img.murder_mystery_2_thumbnail {
     background-image: url('./murder.png');
 }
-.spaceman_thumbnail {
+.vCard-ImageLayer.spaceman_thumbnail,
+.preview-img.spaceman_thumbnail {
     background-image: url('./spaceman.png');
 }
-.stranger_things_thumbnail {
+.vCard-ImageLayer.stranger_things_thumbnail,
+.preview-img.stranger_things_thumbnail {
     background-image: url('./stranger.png');
 }
-.money_heist_thumbnail {
+.vCard-ImageLayer.money_heist_thumbnail,
+.preview-img.money_heist_thumbnail {
     background-image: url('./money.png');
 }
-.black_mirror_thumbnail {
+.vCard-ImageLayer.black_mirror_thumbnail,
+.preview-img.black_mirror_thumbnail {
     background-image: url('./black.png');
 }
-.dark_thumbnail {
+.vCard-ImageLayer.dark_thumbnail,
+.preview-img.dark_thumbnail {
     background-image: url('./dark.png');
 }
-.bojack_horseman_thumbnail {
+.vCard-ImageLayer.bojack_horseman_thumbnail,
+.preview-img.bojack_horseman_thumbnail {
     background-image: url('./bojack.png');
 }
-.crown_thumbnail {
+.vCard-ImageLayer.crown_thumbnail,
+.preview-img.crown_thumbnail {
     background-image: url('./crown.png');
 }
-.lucifer_thumbnail {
+.vCard-ImageLayer.lucifer_thumbnail,
+.preview-img.lucifer_thumbnail {
     background-image: url('./lucifer.png');
 }
-.sweet_tooth_thumbnail {
+.vCard-ImageLayer.sweet_tooth_thumbnail,
+.preview-img.sweet_tooth_thumbnail {
     background-image: url('./sweet.png');
 }
-.outer_banks_thumbnail {
+.vCard-ImageLayer.outer_banks_thumbnail,
+.preview-img.outer_banks_thumbnail {
     background-image: url('./outer.png');
 }
-.firefly_lane_thumbnail {
+.vCard-ImageLayer.firefly_lane_thumbnail,
+.preview-img.firefly_lane_thumbnail {
     background-image: url('./firefly.png');
 }
-.ginny_georgia_thumbnail {
+.vCard-ImageLayer.ginny_georgia_thumbnail,
+.preview-img.ginny_georgia_thumbnail {
     background-image: url('./ginny.png');
 }
-.shadow_bone_thumbnail {
+.vCard-ImageLayer.shadow_bone_thumbnail,
+.preview-img.shadow_bone_thumbnail {
     background-image: url('./shadow.png');
 }
-.sweet_magnolias_thumbnail {
+.vCard-ImageLayer.sweet_magnolias_thumbnail,
+.preview-img.sweet_magnolias_thumbnail {
     background-image: url('./sweetmag.png');
 }
-.locke_key_thumbnail {
+.vCard-ImageLayer.locke_key_thumbnail,
+.preview-img.locke_key_thumbnail {
     background-image: url('./locke.png');
 }
-.jupiters_legacy_thumbnail {
+.vCard-ImageLayer.jupiters_legacy_thumbnail,
+.preview-img.jupiters_legacy_thumbnail {
     background-image: url('./jupiters.png');
 }
-.two_popes_thumbnail {
+.vCard-ImageLayer.two_popes_thumbnail,
+.preview-img.two_popes_thumbnail {
     background-image: url('./the.png');
 }
-.klaus_thumbnail {
+.vCard-ImageLayer.klaus_thumbnail,
+.preview-img.klaus_thumbnail {
     background-image: url('./klaus.png');
 }
-.mitchells_machines_thumbnail {
+.vCard-ImageLayer.mitchells_machines_thumbnail,
+.preview-img.mitchells_machines_thumbnail {
     background-image: url('./themit.png');
 }
-.el_camino_thumbnail {
+.vCard-ImageLayer.el_camino_thumbnail,
+.preview-img.el_camino_thumbnail {
     background-image: url('./el.png');
 }
-.da_5_bloods_thumbnail {
+.vCard-ImageLayer.da_5_bloods_thumbnail,
+.preview-img.da_5_bloods_thumbnail {
     background-image: url('./da5.png');
 }
-.half_of_it_thumbnail {
+.vCard-ImageLayer.half_of_it_thumbnail,
+.preview-img.half_of_it_thumbnail {
     background-image: url('./thehalf.png');
 }
-.ma_rainey_thumbnail {
+.vCard-ImageLayer.ma_rainey_thumbnail,
+.preview-img.ma_rainey_thumbnail {
     background-image: url('./ma.png');
 }
-.i_care_a_lot_thumbnail {
+.vCard-ImageLayer.i_care_a_lot_thumbnail,
+.preview-img.i_care_a_lot_thumbnail {
     background-image: url('./i.png');
 }
-.red_notice_thumbnail {
+.vCard-ImageLayer.red_notice_thumbnail,
+.preview-img.red_notice_thumbnail {
     background-image: url('./red.png');
 }
-.harder_they_fall_thumbnail {
+.vCard-ImageLayer.harder_they_fall_thumbnail,
+.preview-img.harder_they_fall_thumbnail {
     background-image: url('./theharder.png');
 }
-.army_of_the_dead_thumbnail {
+.vCard-ImageLayer.army_of_the_dead_thumbnail,
+.preview-img.army_of_the_dead_thumbnail {
     background-image: url('./army.png');
 }
-.gray_man_thumbnail {
+.vCard-ImageLayer.gray_man_thumbnail,
+.preview-img.gray_man_thumbnail {
     background-image: url('./thegray.png');
 }
-.dont_look_up_thumbnail {
+.vCard-ImageLayer.dont_look_up_thumbnail,
+.preview-img.dont_look_up_thumbnail {
     background-image: url('./dont.png');
 }
-.tick_tick_boom_thumbnail {
+.vCard-ImageLayer.tick_tick_boom_thumbnail,
+.preview-img.tick_tick_boom_thumbnail {
     background-image: url('./tick.png');
 }
-.adam_project_thumbnail {
+.vCard-ImageLayer.adam_project_thumbnail,
+.preview-img.adam_project_thumbnail {
     background-image: url('./adam.png');
 }
-.sea_beast_thumbnail {
+.vCard-ImageLayer.sea_beast_thumbnail,
+.preview-img.sea_beast_thumbnail {
     background-image: url('./sea.png');
 }
-.haunting_hill_house_thumbnail {
+.vCard-ImageLayer.haunting_hill_house_thumbnail,
+.preview-img.haunting_hill_house_thumbnail {
     background-image: url('./haunting.png');
 }
-.oa_thumbnail {
+.vCard-ImageLayer.oa_thumbnail,
+.preview-img.oa_thumbnail {
     background-image: url('./oa.png');
 }
-.russian_doll_thumbnail {
+.vCard-ImageLayer.russian_doll_thumbnail,
+.preview-img.russian_doll_thumbnail {
     background-image: url('./russian.png');
 }
-.big_mouth_thumbnail {
+.vCard-ImageLayer.big_mouth_thumbnail,
+.preview-img.big_mouth_thumbnail {
     background-image: url('./big.png');
 }
-.unbreakable_kimmy_thumbnail {
+.vCard-ImageLayer.unbreakable_kimmy_thumbnail,
+.preview-img.unbreakable_kimmy_thumbnail {
     background-image: url('./unbreakable.png');
 }
-.glow_thumbnail {
+.vCard-ImageLayer.glow_thumbnail,
+.preview-img.glow_thumbnail {
     background-image: url('./glow.png');
 }
-.dark_crystal_thumbnail {
+.vCard-ImageLayer.dark_crystal_thumbnail,
+.preview-img.dark_crystal_thumbnail {
     background-image: url('./darkCrys.png');
 }
-.sense8_thumbnail {
+.vCard-ImageLayer.sense8_thumbnail,
+.preview-img.sense8_thumbnail {
     background-image: url('./sense8.png');
 }
-.saw_x_thumbnail{
+.vCard-ImageLayer.saw_x_thumbnail,
+.preview-img.saw_x_thumbnail {
     background-image: url('./sawx.png');
 }
