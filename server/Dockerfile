@@ -1,17 +1,20 @@
 # ── Development stage ─────────────────────────────────────────────────────────
 FROM node:20-alpine AS development
 WORKDIR /app
+RUN apk add --no-cache openssl
 COPY package*.json ./
 RUN npm ci
 COPY tsconfig.json ./
 COPY src ./src
 COPY prisma ./prisma
+RUN npx prisma generate --schema=./prisma/schema.prisma
 EXPOSE 3001
 CMD ["npm", "run", "dev"]
 
 # ── Build stage ───────────────────────────────────────────────────────────────
 FROM node:20-alpine AS build
 WORKDIR /app
+RUN apk add --no-cache openssl
 COPY package*.json ./
 RUN npm ci --include=dev
 COPY tsconfig.json ./
@@ -24,6 +27,7 @@ RUN npm run build
 FROM node:20-alpine AS production
 WORKDIR /app
 ENV NODE_ENV=production
+RUN apk add --no-cache openssl
 
 # Copy only production dependencies
 COPY package*.json ./

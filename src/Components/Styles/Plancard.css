@@ -1,4 +1,5 @@
 .card-container{
+    position: relative;
     height: 100%;
     width: 19%;
     border-radius: 20px;
@@ -16,14 +17,21 @@
     border-radius: 0px 0px 20px 20px;
 }
 .premium-header{
-    background-color: rgb(75, 74, 74);
-    border-radius: 10px 10px 0px 0px;
     position: absolute;
-    height: 3.5%;
-    width: 19%;
-    margin-top: -1.7%;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 118px;
+    height: auto;
+    padding: 6px 12px 5px;
+    background-color: rgb(75, 74, 74);
+    border-radius: 8px 8px 0 0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    z-index: 2;
+    box-sizing: border-box;
 }
 .premium-header.bg-color{
     background-color: #e50914;

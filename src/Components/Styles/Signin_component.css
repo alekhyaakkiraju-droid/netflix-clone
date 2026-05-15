@@ -68,3 +68,39 @@ h6{
     margin-left: 24%;
     cursor: pointer;
 }
+
+/* Netflix-style overrides when hosted in legacy Signin shell */
+.signin-legacy-wrap .inner-container {
+  width: 100% !important;
+  height: auto !important;
+  min-height: unset !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  color: #fff !important;
+  border-radius: 4px;
+  padding: 40px 48px !important;
+  box-sizing: border-box;
+}
+.signin-legacy-wrap h6 {
+  color: #bdbdbd !important;
+}
+.signin-legacy-wrap .password-input {
+  width: 100% !important;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: #333 !important;
+  color: #fff !important;
+  border: 1px solid #737373 !important;
+  border-radius: 4px !important;
+  padding: 14px 16px !important;
+  height: 50px;
+}
+.signin-legacy-wrap .btn-4 {
+  background-color: #e50914 !important;
+  border-radius: 4px !important;
+  height: 50px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+.signin-legacy-wrap .btn-4:hover {
+  background-color: #f40612 !important;
+}
