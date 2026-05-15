@@ -3,19 +3,22 @@ import './Styles/Logout.css'
 import Button from 'react-bootstrap/Button';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Logout() {
 
     const navigate = useNavigate();
+    const { logout } = useAuth();
 
     function goHome() {
       navigate(`/`);
     }
 
     useEffect(() => {
+        logout();
         const timer = setTimeout(goHome, 15000); 
         return () => clearTimeout(timer); 
-    }, []);
+    }, [logout]);
 
   return (
     <div>

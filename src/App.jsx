@@ -4,14 +4,14 @@ import Signup from './Pages/Signin';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Planform from './Pages/Planform';
 import PaymentPicker from './Pages/PaymentPicker';
-import Login from './Pages/Login';
+import Login from './Pages/Login.jsx';
 import ScrollTop from './Pages/ScrollTop';
 import Registration from './Pages/Registration';
 import Regform from './Pages/Signup';
 import Planwelcome from './Pages/Planwelcome';
-import PaymentGateway from './Pages/PaymentGateway';
+import PaymentGateway from './Pages/PaymentGateway.jsx';
 import Logout from './Pages/Logout';
-import Browse from './Pages/Browse';
+import Browse from './Pages/Browse.js';
 import PlanSelection from './Pages/PlanSelection';
 
 function App() {

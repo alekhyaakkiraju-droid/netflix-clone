@@ -5,6 +5,17 @@ import { ApiError } from '../services/apiClient';
 import './Styles/Main.css';
 import './Styles/PaymentGateway.css';
 
+/** Maps Planform `selectedCard` strings to API plan codes (POST /payments/proceed). */
+export function mapPlanformCardToPlan(selectedCard) {
+  const m = {
+    Premium: 'PREMIUM',
+    Standerd: 'STANDARD',
+    Basic: 'STANDARD_WITH_ADS',
+    Mobile: 'MOBILE',
+  };
+  return m[selectedCard];
+}
+
 /**
  * PCI-DSS compliant payment form.
  * Raw card numbers are NEVER sent to our server.
@@ -13,7 +24,11 @@ import './Styles/PaymentGateway.css';
 function PaymentGateway() {
   const navigate = useNavigate();
   const location = useLocation();
-  const selectedPlan = location.state?.plan ?? 'STANDARD';
+  const state = location.state || {};
+  const selectedPlan =
+    state.plan ??
+    mapPlanformCardToPlan(state.selectedCard) ??
+    'STANDARD';
 
   const [cardDisplay, setCardDisplay] = useState('');
   const [expiry, setExpiry] = useState('');
