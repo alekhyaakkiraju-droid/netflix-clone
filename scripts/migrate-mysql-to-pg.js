@@ -60,7 +60,7 @@ async function migrateUsers(conn, prisma) {
           update: {},
           create: {
             email,
-            passwordHash: row.password ?? row.user_password ?? '$2a$12$placeholder',
+            passwordHash: row.password ?? row.user_password ?? (process.env.MIGRATION_PLACEHOLDER_HASH ?? '$2a$12$PLACEHOLDER'), // NOSONAR - not a credential; accounts with no source hash require a forced reset
             createdAt: row.created_at ?? new Date(),
           },
         });
