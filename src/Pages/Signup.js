@@ -4,10 +4,14 @@ import './Styles/Signup.css';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { authService } from '../services/authService';
+import api, { ApiError } from '../services/apiClient';
 
-/** Legacy `/signup` route — older flow; prefer `/registration` for new users. */
+/** `/signup` — email + password; prefers email from Main/registration via route state. */
 export default function Signup() {
   const [borderColor, setBorderColor] = useState('');
+  const [errorText, setErrorText] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { email } = location.state || {};
@@ -27,41 +31,43 @@ export default function Signup() {
     setHidePassword(false);
   }
 
-  function userRegister() {
+  async function userRegister() {
+    setErrorText('');
     const userInput = document.getElementById('userPasswordInput')?.value ?? '';
+    const emailInput =
+      document.getElementById('legacy-email')?.value?.trim() || email?.trim() || '';
+
+    if (!emailInput) {
+      setBorderColor('red');
+      setErrorText('Email is required. Go back to the home page and enter your email.');
+      return;
+    }
     if (userInput === '') {
       setBorderColor('red');
-    } else {
-      addUser(email, userInput);
-      createProfile(email);
-      navigate('/signup/plan', { state: { email } });
+      setErrorText('Please enter a password.');
+      return;
     }
-  }
 
-  function addUser(emailAddr, password) {
-    fetch(`http://localhost:8080/api/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: emailAddr,
-        password,
-      }),
-    });
-  }
-
-  function createProfile(emailAddr) {
-    fetch(`http://localhost:8080/api/profile/add`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: emailAddr,
-        profilePicture: 'icon i1',
-      }),
-    });
+    setSubmitting(true);
+    setBorderColor('');
+    try {
+      const result = await authService.register(emailInput, userInput);
+      localStorage.setItem('accessToken', result.accessToken);
+      localStorage.setItem('refreshToken', result.refreshToken);
+      await api.post('/profiles', { profileName: 'Profile 1' }, true);
+      navigate('/signup/plan', { state: { email: emailInput } });
+    } catch (e) {
+      const message =
+        e instanceof ApiError
+          ? e.message
+          : e instanceof Error
+            ? e.message
+            : 'Registration failed. Please try again.';
+      setErrorText(message);
+      setBorderColor('red');
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -78,9 +84,19 @@ export default function Signup() {
         <div className="nf-auth-card signup-legacy-card">
           <p className="nf-step-label">Step 1 of 3</p>
           <h1 className="nf-flow-title">Create a password to start your membership</h1>
-          <p className="signup-legacy-hint">Just a few more steps and you&apos;re done. We hate paperwork, too.</p>
+          <p className="signup-legacy-hint">
+            Just a few more steps and you&apos;re done. We hate paperwork, too.
+          </p>
+          <p className="signup-legacy-hint" style={{ fontSize: '0.85rem', opacity: 0.9 }}>
+            Password must be at least 8 characters and include an uppercase letter and a number.
+          </p>
 
           <Form className="signup-legacy-form">
+            {errorText && (
+              <div className="profile-name-validate profile-name-notvalidate signup-reg-error" role="alert">
+                {errorText}
+              </div>
+            )}
             <div className="nf-field-wrap">
               <input
                 id="legacy-email"
@@ -126,8 +142,13 @@ export default function Signup() {
               />
             </div>
 
-            <Button type="button" onClick={userRegister} className="btn nf-btn-primary signup-next">
-              Next
+            <Button
+              type="button"
+              onClick={userRegister}
+              className="btn nf-btn-primary signup-next"
+              disabled={submitting}
+            >
+              {submitting ? '…' : 'Next'}
             </Button>
           </Form>
         </div>
