@@ -3,7 +3,9 @@ FROM node:20-alpine AS development
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
-COPY . .
+COPY tsconfig.json ./
+COPY src ./src
+COPY prisma ./prisma
 EXPOSE 3001
 CMD ["npm", "run", "dev"]
 
@@ -12,7 +14,9 @@ FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --include=dev
-COPY . .
+COPY tsconfig.json ./
+COPY src ./src
+COPY prisma ./prisma
 RUN npx prisma generate --schema=./prisma/schema.prisma
 RUN npm run build
 

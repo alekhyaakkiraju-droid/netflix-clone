@@ -54,7 +54,10 @@ function PlanSelection() {
                 background: selected === plan.id ? '#1a1a1a' : '#0d0d0d',
                 cursor: 'pointer',
               }}
+              role="button"
+              tabIndex={0}
               onClick={() => setSelected(plan.id)}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelected(plan.id)}
             >
               <div className="card-body p-3">
                 {plan.recommended && (
