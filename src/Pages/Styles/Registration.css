@@ -27,6 +27,18 @@
   text-align: left;
 }
 
+.registration-intro-brand {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.registration-intro-wordmark {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #e50914;
+}
+
 .registration-intro-outer {
   display: flex;
   justify-content: center;
@@ -45,6 +57,14 @@
   max-width: 100%;
   height: auto;
   margin: 0 auto 20px;
+}
+
+.registration-intro-devices-svg {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto;
 }
 
 .registration-intro-step {

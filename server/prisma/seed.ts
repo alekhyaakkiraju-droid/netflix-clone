@@ -6,8 +6,12 @@
  */
 
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
+
+const demoEmail = 'demo@netflixforged.com';
+const demoPassword = 'Password123';
 
 const videos = [
   // Now Playing
@@ -36,10 +40,27 @@ async function main() {
     await prisma.videoMetadata.upsert({
       where: { id: video.videoTitle },
       update: video,
-      create: video,
+      create: {
+        id: video.videoTitle,
+        ...video,
+      },
     });
   }
   console.log(`Seeded ${videos.length} video records.`);
+
+  const passwordHash = await bcrypt.hash(demoPassword, 10);
+  await prisma.user.upsert({
+    where: { email: demoEmail },
+    update: {},
+    create: {
+      email: demoEmail,
+      passwordHash,
+      profiles: {
+        create: { profileName: 'Demo User' },
+      },
+    },
+  });
+  console.log(`Demo login: ${demoEmail} / ${demoPassword}`);
 }
 
 main()
