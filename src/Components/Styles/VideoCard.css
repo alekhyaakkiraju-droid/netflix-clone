@@ -1,22 +1,60 @@
-.vCard-Container {
+.vCard-Wrapper {
+    position: relative;
     height: 100%;
     width: 103%;
     border-radius: 7px;
     z-index: 999;
     cursor: pointer;
-    background-size: 112%; 
-    background-position: center;
-    transition: background-size 2s ease, background-position 2s ease; 
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: visible;
-    background-repeat: no-repeat;
 }
 
-.vCard-Container:hover {
+.vCard-Placeholder {
+    position: absolute;
+    inset: 0;
+    border-radius: 7px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.vCard-ImageLayer {
+    position: absolute;
+    inset: 0;
+    border-radius: 7px;
+    z-index: 1;
+    pointer-events: none;
+    background-size: 112%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-size 2s ease, background-position 2s ease;
+}
+
+.vCard-Wrapper:hover .vCard-ImageLayer {
     background-size: 130%;
     background-position: center;
+}
+
+.vCard-TitleStrip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 8px;
+    border-radius: 0 0 7px 7px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.88));
+    pointer-events: none;
+}
+
+.vCard-TitleText {
+    display: block;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 .v1 {

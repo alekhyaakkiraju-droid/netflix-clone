@@ -1,32 +1,82 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import './Styles/Main.css';
+import './Styles/Planform.css';
 
 const PLANS = [
   {
     id: 'MOBILE',
     name: 'Mobile',
-    price: '$6.99/mo',
-    features: ['Mobile & tablet', '480p', '1 device at a time'],
+    price: '$6.99',
+    period: '/mo',
+    videoQuality: 'Good',
+    resolution: '480p',
+    screens: '1',
+    downloadDevices: '1',
+    hasUhd: false,
+    hasSpatial: false,
+    hasAds: false,
   },
   {
     id: 'STANDARD_WITH_ADS',
-    name: 'Standard with Ads',
-    price: '$6.99/mo',
-    features: ['TV, mobile, tablet', '1080p Full HD', '2 devices at a time', 'Some ads'],
+    name: 'Standard with ads',
+    price: '$6.99',
+    period: '/mo',
+    videoQuality: 'Great',
+    resolution: '1080p (Full HD)',
+    screens: '2',
+    downloadDevices: '2',
+    hasUhd: false,
+    hasSpatial: false,
+    hasAds: true,
   },
   {
     id: 'STANDARD',
     name: 'Standard',
-    price: '$15.49/mo',
-    recommended: false,
-    features: ['TV, mobile, tablet', '1080p Full HD', '2 devices at a time', 'No ads'],
+    price: '$15.49',
+    period: '/mo',
+    videoQuality: 'Great',
+    resolution: '1080p (Full HD)',
+    screens: '2',
+    downloadDevices: '2',
+    hasUhd: false,
+    hasSpatial: false,
+    hasAds: false,
   },
   {
     id: 'PREMIUM',
     name: 'Premium',
-    price: '$22.99/mo',
-    recommended: true,
-    features: ['TV, mobile, tablet', '4K Ultra HD + HDR', '4 devices at a time', 'Spatial audio', 'No ads'],
+    price: '$22.99',
+    period: '/mo',
+    videoQuality: 'Best',
+    resolution: '4K (Ultra HD) + HDR',
+    screens: '4',
+    downloadDevices: '6',
+    hasUhd: true,
+    hasSpatial: true,
+    hasAds: false,
+  },
+];
+
+const TABLE_ROWS = [
+  {
+    label: 'Monthly price',
+    type: 'price',
+  },
+  { label: 'Video quality', key: 'videoQuality', type: 'text' },
+  { label: 'Resolution', key: 'resolution', type: 'text' },
+  {
+    label: 'Spatial audio (immersive sound)',
+    key: 'hasSpatial',
+    type: 'bool',
+  },
+  { label: 'Watch on your TV, computer, mobile phone and tablet', key: 'tv', type: 'yes' },
+  { label: 'Downloadable devices', key: 'downloadDevices', type: 'text' },
+  { label: 'Simultaneous streams', key: 'screens', type: 'text' },
+  {
+    label: 'Ads',
+    key: 'hasAds',
+    type: 'ads',
   },
 ];
 
@@ -39,49 +89,135 @@ function PlanSelection() {
   }
 
   return (
-    <div style={{ background: '#141414', minHeight: '100vh', color: 'white' }} className="py-5 px-3">
-      <div className="text-center mb-5">
-        <h1 style={{ fontWeight: 700 }}>Choose your plan.</h1>
-        <p className="text-secondary">Downgrade or upgrade at any time.</p>
-      </div>
+    <div className="plans-page nf-auth-shell">
+      <header className="nf-auth-top">
+        <Link to="/" aria-label="Netflix home">
+          <img className="brand-logo" src="/Assets/Netflix-brand.png" alt="Netflix" />
+        </Link>
+      </header>
 
-      <div className="row justify-content-center g-3 mb-5">
-        {PLANS.map((plan) => (
-          <div key={plan.id} className="col-6 col-md-3">
-            <div
-              className={`card h-100 border-2 ${selected === plan.id ? 'border-danger' : 'border-secondary'}`}
-              style={{
-                background: selected === plan.id ? '#1a1a1a' : '#0d0d0d',
-                cursor: 'pointer',
-              }}
-              role="button"
-              tabIndex={0}
-              onClick={() => setSelected(plan.id)}
-              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelected(plan.id)}
-            >
-              <div className="card-body p-3">
-                {plan.recommended && (
-                  <span className="badge bg-danger mb-2">Best Value</span>
-                )}
-                <h5 className="text-white">{plan.name}</h5>
-                <p className="text-danger fw-bold">{plan.price}</p>
-                <ul className="text-secondary small ps-3">
-                  {plan.features.map((f) => <li key={f}>{f}</li>)}
-                </ul>
-              </div>
-              {selected === plan.id && (
-                <div className="card-footer bg-danger text-center text-white py-1 small">Selected ✓</div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+      <main className="plans-main">
+        <p className="nf-step-label plans-step">Step 2 of 3</p>
+        <h1 className="nf-flow-title plans-heading">Choose the plan that&apos;s right for you</h1>
+        <p className="plans-sub">
+          Downgrade or upgrade at any time. We&apos;ll remind you before any price changes.
+        </p>
 
-      <div className="text-center">
-        <button className="btn btn-danger btn-lg px-5" onClick={handleContinue}>
-          Continue
-        </button>
-      </div>
+        <div className="plans-grid" role="radiogroup" aria-label="Select membership plan">
+          {PLANS.map((plan) => {
+            const isSel = selected === plan.id;
+            return (
+              <button
+                key={plan.id}
+                type="button"
+                role="radio"
+                aria-checked={isSel}
+                className={`plan-pick-card ${isSel ? 'plan-pick-card--selected' : ''}`}
+                onClick={() => setSelected(plan.id)}
+              >
+                <span className="plan-pick-name">{plan.name}</span>
+                <span className="plan-pick-price">
+                  {plan.price}
+                  <span className="plan-pick-period">{plan.period}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="plans-table-wrap" tabIndex={0}>
+          <table className="plans-compare">
+            <thead>
+              <tr>
+                <th scope="col" className="plans-th-feature">
+                  {' '}
+                </th>
+                {PLANS.map((plan) => (
+                  <th
+                    key={plan.id}
+                    scope="col"
+                    className={selected === plan.id ? 'plans-th--active' : ''}
+                  >
+                    <button
+                      type="button"
+                      className="plans-th-btn"
+                      onClick={() => setSelected(plan.id)}
+                    >
+                      {plan.name}
+                    </button>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {TABLE_ROWS.map((row) => (
+                <tr key={row.label}>
+                  <th scope="row" className="plans-row-label">
+                    {row.label}
+                  </th>
+                  {PLANS.map((plan) => {
+                    let cell;
+                    if (row.type === 'price') {
+                      cell = (
+                        <span className="plans-price-cell">
+                          {plan.price}
+                          <span className="plan-pick-period">{plan.period}</span>
+                        </span>
+                      );
+                    } else if (row.type === 'text') {
+                      cell = plan[row.key];
+                    } else if (row.type === 'bool') {
+                      cell =
+                        plan[row.key] ? (
+                          <i className="bi bi-check-lg plans-check" aria-label="Yes" />
+                        ) : (
+                          <span className="plans-dash">—</span>
+                        );
+                    } else if (row.type === 'yes') {
+                      cell = <i className="bi bi-check-lg plans-check" aria-label="Included" />;
+                    } else if (row.type === 'ads') {
+                      cell = plan.hasAds ? 'Some ad breaks' : 'No ads';
+                    } else {
+                      cell = '—';
+                    }
+                    return (
+                      <td
+                        key={plan.id}
+                        className={selected === plan.id ? 'plans-td--active' : ''}
+                      >
+                        {cell}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+              <tr>
+                <th scope="row" className="plans-row-label">
+                  4K + HDR
+                </th>
+                {PLANS.map((plan) => (
+                  <td
+                    key={plan.id}
+                    className={selected === plan.id ? 'plans-td--active' : ''}
+                  >
+                    {plan.hasUhd ? (
+                      <i className="bi bi-check-lg plans-check" aria-label="Included" />
+                    ) : (
+                      <span className="plans-dash">—</span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="plans-next-wrap">
+          <button type="button" className="btn nf-btn-primary plans-next-btn" onClick={handleContinue}>
+            Next
+          </button>
+        </div>
+      </main>
     </div>
   );
 }

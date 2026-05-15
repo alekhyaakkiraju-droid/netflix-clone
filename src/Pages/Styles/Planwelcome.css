@@ -1,0 +1,109 @@
+/* `/signup/plan` — dark shell, white content card */
+
+.planwelcome-page {
+  min-height: 100vh;
+  background: #000;
+  font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.planwelcome-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 4% 0;
+  box-sizing: border-box;
+}
+
+.planwelcome-logo-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.planwelcome-signout {
+  color: #e50914;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.planwelcome-signout:hover {
+  text-decoration: underline;
+}
+
+.planwelcome-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 48px 4% 64px;
+  box-sizing: border-box;
+}
+
+.nf-planwelcome-card {
+  width: 100%;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 4px;
+  padding: 40px 48px 48px;
+  box-sizing: border-box;
+  text-align: left;
+  color: #000;
+}
+
+.planwelcome-step {
+  color: #737373 !important;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px !important;
+}
+
+.planwelcome-heading {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 24px;
+  line-height: 1.15;
+}
+
+.planwelcome-benefits {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.planwelcome-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 17px;
+  line-height: 1.45;
+  color: #000;
+}
+
+.planwelcome-check {
+  flex-shrink: 0;
+  color: #e50914;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.planwelcome-next {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  height: 50px;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  margin-top: 8px !important;
+  text-decoration: none !important;
+}
+
+@media (max-width: 576px) {
+  .nf-planwelcome-card {
+    padding: 32px 24px 40px;
+  }
+}

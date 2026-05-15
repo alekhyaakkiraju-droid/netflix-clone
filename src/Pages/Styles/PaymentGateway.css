@@ -1,120 +1,103 @@
-.credit-container{
-    width: 27%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    text-align: left;
-    padding-top: 2.4%;
+/* Payment — Step 3 */
+
+.payment-card-outer {
+  align-items: flex-start;
 }
-.body-container2{
-    display: flex;
-    justify-content: center;
+
+.payment-card {
+  max-width: 480px;
 }
-.payment-types-container{
-    display: flex;
-    gap: 2%;
+
+.payment-title {
+  margin-bottom: 8px !important;
 }
-.input-sections,.input-sections2{
-    width: 100%;
-    height: 7vh;
-    margin-top: 2.5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.payment-plan-line {
+  color: #a3a3a3;
+  font-size: 15px;
+  margin: 0 0 20px;
 }
-.input-sections2{
-    display: flex;
-    gap: 3%;
-    justify-content: center;
-    align-items: center;
+
+.payment-card-logos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
 }
-.credit-input{
-    width: 100%;
-    height: 100%;
-    border: 1px solid rgb(131, 131, 131);
+
+.pay-logo {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(1.05);
 }
-.credit-input:focus{
-    box-shadow: none;
-    border-color: black;
-    border-style: double;
+
+.payment-secure-note {
+  font-size: 13px;
+  color: #bdbdbd;
+  margin: 0 0 20px;
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
-.package-info{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border-radius: 5px;
-    height: 13vh;
-    background-color: rgb(237, 235, 235);
-    margin-top: 2.8%;
-    margin-bottom: 5%;
-    line-height: 150%;
-    justify-content: center;
-    padding-left: 4%;
+
+.payment-secure-note .bi-lock-fill {
+  color: #e50914;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
-.package-price{
-    font-weight: 600;
-    margin-bottom: 0%;
+
+.payment-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
-.package-name{
-    margin-bottom: 0%;
+
+@media (max-width: 420px) {
+  .payment-row-2 {
+    grid-template-columns: 1fr;
+  }
 }
-.package-change{
-    position: absolute;
-    font-weight: 600;
-    cursor: pointer;
-    margin-left: 21%;
+
+.pay-success-shell {
+  justify-content: center;
 }
-.package-change:hover{
-    text-decoration: underline;
+
+.pay-success-card {
+  text-align: center;
+  max-width: 480px;
 }
-.payment-terms{
-    text-align: justify;
-    font-size: 80%;
-    color: rgb(132, 132, 132);
-    margin-bottom: 1%;
+
+.pay-success-icon {
+  font-size: 3.5rem;
+  color: #e50914;
+  line-height: 1;
+  margin-bottom: 16px;
 }
-.check-box{
-    display: flex;
-    color: rgb(132, 132, 132);
+
+.pay-success-title {
+  margin-bottom: 8px !important;
+  text-align: center !important;
 }
-.ch-box:active{
-    box-shadow: none;
+
+.pay-success-sub {
+  margin: 0;
+  color: #a3a3a3;
+  font-size: 17px;
 }
-.input-icon{
-    position: absolute;
-    margin-left: 23%;
-    height: 5%;
+
+/* Legacy PaymentGateway.js / credit-container usage */
+.credit-container,
+.body-container2 {
+  color: #e5e5e5;
 }
-.input-icon-cvv{
-    position: absolute;
-    margin-left: 23%;
-    height: 4%;
-}
-.uncheck-error{
-    color: rgb(212, 0, 0);
-    font-weight: 400;
-}
-.fill-error{
-    color: rgb(212, 0, 0);
-    font-size: 80%;
-}
-.fill-error-conatiner{
-    display: flex;
-}
-.fill-error-left{
-    width: 51.5%;
-}
-.fill-error-right{
-    width: 48.5%;
-}
-.input-icon5{
-    height: 3.7%;
-}
-.payment-error{
-    padding-top: 6%;
-    padding-bottom: 6%;
-    height: 25vh;
-}
-.payment-error-text{
-    margin-left: 3%;
+
+.credit-input {
+  height: 50px;
+  border-radius: 4px;
+  background: #333 !important;
+  color: #fff !important;
+  border: 1px solid #737373 !important;
 }

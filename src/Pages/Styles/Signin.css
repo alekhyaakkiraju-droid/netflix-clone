@@ -1,7 +1,27 @@
-.body-container{
-    width: 100%;
-    height: 86vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.body-container {
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin-legacy-wrap .body-container {
+  min-height: unset;
+  padding: 0;
+}
+
+.signin-legacy-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px 4% 48px;
+  box-sizing: border-box;
+}
+
+.signin-legacy-inner {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }

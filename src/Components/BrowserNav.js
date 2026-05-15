@@ -6,7 +6,16 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import DropDownProfile from './DropDownProfile';
 
-export default function BrowserNav({selectedProfile,showProfilePick,profilesNavBar,setSelectedProfile,showMyList,hideMyList,setSelectedProfileName}) {
+export default function BrowserNav({
+  selectedProfile,
+  showProfilePick,
+  profilesNavBar,
+  setSelectedProfile,
+  showMyList,
+  hideMyList,
+  setSelectedProfileName,
+  setSelectedProfileId,
+}) {
     const [showDropdown, setShowDropdown] = useState(false);
     const handleDropdownToggle = (isOpen) => {
         setShowDropdown(isOpen);
@@ -36,10 +45,13 @@ export default function BrowserNav({selectedProfile,showProfilePick,profilesNavB
           <NavDropdown className='dropProfile custom-dropdown' id="collapsible-nav-dropdown" show={showDropdown} onToggle={handleDropdownToggle}>
             {profilesNavBar.map(profile => (
                     <DropDownProfile
-                        profileName={profile.profileName} 
+                        key={profile.id ?? profile.profileName}
+                        profileId={profile.id}
+                        profileName={profile.profileName}
                         profilePicture={profile.profilePicture}
                         setSelectedProfile={setSelectedProfile}
                         setSelectedProfileName={setSelectedProfileName}
+                        setSelectedProfileId={setSelectedProfileId}
                         closeDropdown={closeDropdown}
                     />
             ))}

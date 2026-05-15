@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Styles/Browse.css';
-import { useLocation } from 'react-router-dom';
 import ProfilePicker from '../Components/ProfilePicker';
 import BrowserNav from '../Components/BrowserNav';
 import VideoCard from '../Components/VideoCard';
@@ -12,11 +11,31 @@ import 'swiper/css/pagination';
 import Addtolist from '../Components/Addtolist';
 import Removefromlist from '../Components/Removefromlist';
 import MyList from '../Components/MyList';
+import { useLocation } from 'react-router-dom';
+import { mapVideoMetadataForBrowse } from '../utils/mapVideoMetadata';
+
+const API_BASE = import.meta.env.VITE_API_URL || '/api/v1';
+
+function authHeaders() {
+  const token = localStorage.getItem('accessToken');
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  return headers;
+}
+
+async function fetchVideosByCategory(category) {
+  const path = `${API_BASE}/videos/genre/${encodeURIComponent(category)}`;
+  const response = await fetch(path, { headers: authHeaders() });
+  if (!response.ok) throw new Error(`videos ${category}`);
+  const rows = await response.json();
+  return rows.map((row) => mapVideoMetadataForBrowse(row));
+}
 
 export default function Browse() {
   const [profilePick, setProfilePick] = useState(true);
   const [selectedProfile, setSelectedProfile] = useState('');
   const [selectedProfileName, setSelectedProfileName] = useState('');
+  const [selectedProfileId, setSelectedProfileId] = useState('');
   const [profilesNavBar, setProfilesNavBar] = useState([]);
   const [myList, setMyList] = useState(false);
   const [isInList, setIsInList] = useState(false);
@@ -60,51 +79,55 @@ export default function Browse() {
   const [originalsData, setOriginalsData] = useState([]);
 
   useEffect(() => {
-    fetchNowPlaying();
-    fetchTopRated();
-    fetchNewRelease();
-    fetchOrginals();
+    let cancelled = false;
+    (async () => {
+      try {
+        const [np, tr, nr, or] = await Promise.all([
+          fetchVideosByCategory('Now Playing'),
+          fetchVideosByCategory('Top Rated Movies'),
+          fetchVideosByCategory('New Releases'),
+          fetchVideosByCategory('Originals'),
+        ]);
+        if (cancelled) return;
+        setNowPlayingData(np);
+        setTopRatedData(tr);
+        setNewReleasesData(nr);
+        setOriginalsData(or);
+      } catch {
+        if (!cancelled) {
+          setNowPlayingData([]);
+          setTopRatedData([]);
+          setNewReleasesData([]);
+          setOriginalsData([]);
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  function checkInList() {
-    return fetch(`http://localhost:8080/api/list/check/${email}/${selectedProfileName}/Saw X`)
-      .then(response => response.json())
-      .then(data => {
-        setIsInList(data);
-      });
-  }
-
-  const fetchNowPlaying = () => { //Retrive suggestions for NowPlaying
-    fetch(`http://localhost:8080/api/videoSuggestions/Now Playing`)
-      .then(response => response.json())
-      .then(data => {
-        setNowPlayingData(data);
-      });
-  };
-
-  const fetchTopRated = () => { //Retrive suggestions for TopRated
-    fetch(`http://localhost:8080/api/videoSuggestions/Top Rated Movies`)
-      .then(response => response.json())
-      .then(data => {
-        setTopRatedData(data);
-      });
-  };
-
-  const fetchNewRelease = () => { //Retrive suggestions for NewRelease
-    fetch(`http://localhost:8080/api/videoSuggestions/New Releases`)
-      .then(response => response.json())
-      .then(data => {
-        setNewReleasesData(data);
-      });
-  };
-
-  const fetchOrginals = () => { //Retrive suggestions for Originals
-    fetch(`http://localhost:8080/api/videoSuggestions/Originals`)
-      .then(response => response.json())
-      .then(data => {
-        setOriginalsData(data);
-      });
-  };
+  useEffect(() => {
+    if (!selectedProfileId) {
+      setIsInList(false);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const path = `${API_BASE}/preferences/${selectedProfileId}/check/${encodeURIComponent('Saw X')}`;
+        const response = await fetch(path, { headers: authHeaders() });
+        if (!response.ok) throw new Error('check list');
+        const data = await response.json();
+        if (!cancelled) setIsInList(data.inList === true);
+      } catch {
+        if (!cancelled) setIsInList(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedProfileId]);
 
   return (
     <div className="browse">
@@ -115,6 +138,7 @@ export default function Browse() {
           email={email}
           setProfilesNavBar={setProfilesNavBar}
           setSelectedProfileName={setSelectedProfileName}
+          setSelectedProfileId={setSelectedProfileId}
         />
       )}
       <div className="browse-container">
@@ -126,6 +150,7 @@ export default function Browse() {
           showMyList={showMyList}
           hideMyList={hideMyList}
           setSelectedProfileName={setSelectedProfileName}
+          setSelectedProfileId={setSelectedProfileId}
         />
         {myList && <MyList email={email} selectedProfileName={selectedProfileName} />}
         <div className="main-hero-playback">

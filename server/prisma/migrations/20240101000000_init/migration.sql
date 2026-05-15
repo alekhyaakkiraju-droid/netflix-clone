@@ -1,8 +1,11 @@
 -- CreateEnum
-CREATE TYPE "Plan" AS ENUM ('BASIC', 'STANDARD', 'PREMIUM');
+CREATE TYPE "Plan" AS ENUM ('MOBILE', 'STANDARD', 'STANDARD_WITH_ADS', 'PREMIUM');
 
 -- CreateEnum
 CREATE TYPE "SubscriptionStatus" AS ENUM ('ACTIVE', 'CANCELLED', 'PAST_DUE', 'TRIALING');
+
+-- CreateEnum
+CREATE TYPE "PaymentStatus" AS ENUM ('PENDING', 'SUCCEEDED', 'FAILED', 'REFUNDED');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -20,8 +23,8 @@ CREATE TABLE "profiles" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "profile_name" TEXT NOT NULL,
+    "avatar_url" TEXT,
     "game_handle" TEXT,
-    "avatar" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -32,11 +35,11 @@ CREATE TABLE "profiles" (
 CREATE TABLE "subscriptions" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "plan" "Plan" NOT NULL DEFAULT 'BASIC',
+    "plan" "Plan" NOT NULL DEFAULT 'STANDARD',
     "status" "SubscriptionStatus" NOT NULL DEFAULT 'ACTIVE',
     "started_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "expires_at" TIMESTAMP(3),
-    "cancelled_at" TIMESTAMP(3),
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "subscriptions_pkey" PRIMARY KEY ("id")
 );
@@ -45,11 +48,13 @@ CREATE TABLE "subscriptions" (
 CREATE TABLE "payments" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
+    "last4" TEXT,
+    "provider_token" TEXT,
     "amount_cents" INTEGER NOT NULL,
     "currency" TEXT NOT NULL DEFAULT 'USD',
-    "payment_method_token" TEXT,
-    "status" TEXT NOT NULL,
-    "processed_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "status" "PaymentStatus" NOT NULL DEFAULT 'PENDING',
+    "failure_reason" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "payments_pkey" PRIMARY KEY ("id")
 );
@@ -95,10 +100,10 @@ CREATE TABLE "audit_logs" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "profiles_profile_name_key" ON "profiles"("profile_name");
+CREATE UNIQUE INDEX "profiles_game_handle_key" ON "profiles"("game_handle");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "profiles_game_handle_key" ON "profiles"("game_handle");
+CREATE UNIQUE INDEX "profiles_user_id_profile_name_key" ON "profiles"("user_id", "profile_name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "subscriptions_user_id_key" ON "subscriptions"("user_id");

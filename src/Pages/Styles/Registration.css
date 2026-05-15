@@ -1,18 +1,115 @@
-.register-body{
-    background-color: white;
-    width: 100%;
-    height: 86vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* `/registration` — light card, device artwork */
+
+.registration-intro-page {
+  min-height: 100vh;
+  position: relative;
+  background: #fff;
+  font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.inner-body{
-    width: 23%;
-    height: 70%;
+
+.registration-intro-signout {
+  position: absolute;
+  top: 24px;
+  right: 4%;
+  z-index: 2;
+  color: #e50914;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
 }
-.register-next{
-    height: 15%;
+
+.registration-intro-signout:hover {
+  text-decoration: underline;
 }
-.registerimg{
-    height: 30%;
+
+.registration-intro-header {
+  padding: 24px 4% 0;
+  text-align: left;
+}
+
+.registration-intro-brand {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.registration-intro-wordmark {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #e50914;
+}
+
+.registration-intro-outer {
+  display: flex;
+  justify-content: center;
+  padding: 24px 4% 56px;
+  box-sizing: border-box;
+}
+
+.registration-intro-card {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.registration-intro-devices {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 20px;
+}
+
+.registration-intro-devices-svg {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.registration-intro-step {
+  color: #737373 !important;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 12px !important;
+}
+
+.registration-intro-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 12px;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.registration-intro-sub {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #333;
+  margin: 0 0 28px;
+  text-align: center;
+}
+
+.registration-intro-next {
+  font-weight: 500 !important;
+  margin-top: 0 !important;
+}
+
+.registration-intro-foot {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #737373;
+}
+
+.registration-intro-foot a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.registration-intro-foot a:hover {
+  text-decoration: underline;
 }

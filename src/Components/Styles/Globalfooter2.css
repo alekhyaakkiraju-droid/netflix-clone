@@ -1,11 +1,107 @@
-.home-footer2{
-    width: 100%;
-    padding-left: 8%;
-    height: 22vh;
-    background-color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    font-size: 80%;
+/* Footer — Netflix-style */
+.nf-footer {
+  background-color: #000;
+  color: #757575;
+  padding: 48px 4% 32px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.nf-footer-inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.nf-footer-phone {
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 28px;
+  font-size: 16px;
+}
+.nf-footer-phone:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.nf-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px 16px;
+  margin-bottom: 28px;
+}
+
+.nf-footer-col {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nf-footer-col li {
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+
+.nf-footer-col a {
+  color: #757575;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.nf-footer-col a:hover {
+  text-decoration: underline;
+}
+
+.nf-footer-lang {
+  margin-bottom: 20px;
+}
+
+.nf-lang-toggle--footer {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #737373 !important;
+  background: transparent !important;
+  border: 1px solid #5e5e5e !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}
+.nf-lang-toggle--footer:hover,
+.nf-lang-toggle--footer:focus-visible,
+.nf-lang-toggle--footer.show {
+  border-color: #fff !important;
+  color: #fff !important;
+}
+.nf-lang-toggle--footer::after {
+  display: none !important;
+}
+
+.nf-footer-copy {
+  color: #757575;
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+.nf-footer-recaptcha {
+  font-size: 11px;
+  color: #757575;
+  line-height: 1.45;
+  margin: 0;
+  max-width: 560px;
+}
+
+@media (max-width: 768px) {
+  .nf-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .nf-footer-grid {
+    grid-template-columns: 1fr;
+  }
 }

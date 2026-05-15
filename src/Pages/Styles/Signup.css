@@ -1,24 +1,72 @@
-.regform-inner-body{
-    width:28%;
-    text-align: left;
+.signup-legacy-page {
+  position: relative;
 }
-.add-password{
-    width: 100%;
-    padding: 3% 5%;
-    border-radius: 5px;
-    border-color: rgb(151, 151, 151);
-    margin-bottom: 2%;
+
+.signup-legacy-page .signup-signout {
+  position: absolute;
+  top: 24px;
+  right: 4%;
+  z-index: 2;
+  color: #e50914;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
 }
-.add-password:focus{
-    border-color: black;
+
+.signup-legacy-page .signup-signout:hover {
+  text-decoration: underline;
 }
-.check-box-add-password{
-    display: flex;
+
+.signup-legacy-hint {
+  color: #bdbdbd;
+  font-size: 16px;
+  line-height: 1.45;
+  margin: 0 0 20px;
 }
-.addPassword{
-    height: 30%;
+
+.signup-legacy-form .signup-next {
+  margin-top: 16px;
 }
-.passwordToggle2{
-    margin-top: 0.7%;
-    margin-left: 24.5%;
+
+.signup-password-row .nf-float-input {
+  padding-right: 64px;
+}
+
+.signup-toggle-vis {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #e50914;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.signup-toggle-vis:hover {
+  text-decoration: underline;
+}
+
+.signup-offers {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.signup-offers-check {
+  color: #bdbdbd;
+  font-size: 14px;
+}
+
+.signup-offers-check .form-check-input:checked,
+.signup-offers-check .form-check-input:focus {
+  background-color: #e50914;
+  border-color: #e50914;
+  box-shadow: none;
+}
+
+.signup-offers-check .form-check-input:focus {
+  outline: none;
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Styles/VideoCardInfo.css';
 import Addtolist from './Addtolist';
 import Removefromlist from './Removefromlist';
+import { gradientForTitle } from '../utils/videoPlaceholder';
 
 export default function VideoCardInfo({ email, selectedProfileName, videoTitle, videoCategory, videoRating, releaseYear, thumbnail }) {
   const placement = "hoverTextUp";
@@ -23,10 +24,17 @@ export default function VideoCardInfo({ email, selectedProfileName, videoTitle, 
 
   return (
     <div className='VideoCardInfo-Card'>
-      <div className={`preview-img ${thumbnail}`}></div>
+      <div className="preview-img-stack">
+        <div
+          className="preview-img-placeholder"
+          style={{ background: gradientForTitle(videoTitle) }}
+          aria-hidden
+        />
+        <div className={`preview-img ${thumbnail}`} />
+      </div>
       <div className="btn-container-card">
         <div className="circle-btn circle-btn2 circle-btn2-play"><i className="bi bi-play-fill"></i></div>
-        {!isInList 
+        {isInList
           ? <Removefromlist email={email} selectedProfileName={selectedProfileName} videoTitle={videoTitle} placement={placement}/>
           : <Addtolist selectedProfileName={selectedProfileName} email={email} thumbnail={thumbnail} releaseYear={releaseYear} videoTitle={videoTitle} videoCategory={videoCategory} placement={placement} />
         }
