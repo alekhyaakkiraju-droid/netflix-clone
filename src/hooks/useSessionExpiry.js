@@ -67,14 +67,14 @@ export function useSessionExpiry({ onWarning, onExpired } = {}) {
   useEffect(() => {
     scheduleTimers();
     const events = ['mousedown', 'keydown', 'touchstart', 'scroll'];
-    events.forEach((e) => window.addEventListener(e, resetIdleTimer));
+    events.forEach((e) => globalThis.addEventListener(e, resetIdleTimer));
     resetIdleTimer();
 
     return () => {
       clearTimeout(warningTimerRef.current);
       clearTimeout(expireTimerRef.current);
       clearTimeout(idleTimerRef.current);
-      events.forEach((e) => window.removeEventListener(e, resetIdleTimer));
+      events.forEach((e) => globalThis.removeEventListener(e, resetIdleTimer));
     };
   }, [scheduleTimers, resetIdleTimer]);
 }
